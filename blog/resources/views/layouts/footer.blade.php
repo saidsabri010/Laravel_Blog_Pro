@@ -46,9 +46,9 @@
     </div>
 
     <!-- Copyrights -->
-    <div class="bg-light py-4">
+    <div class="bg-light py-3">
       <div class="container text-center">
-        <p class="text-muted mb-0 py-2">© 2021 All rights reserved.</p>
+        <p class="text-muted mb-0 py-1">© 2021 All rights reserved.</p>
       </div>
     </div>
   </footer>
