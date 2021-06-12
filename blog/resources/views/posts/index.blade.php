@@ -23,9 +23,11 @@
             <?php // check if a user is loged in and they have posts ?>
             @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
 
-            <a style="width: 100px" class="btn btn-success float-right" 
+            <a style="width: 100px;position: absolute;
+            right: 0;"  class="btn btn-success float-right" 
             href="/posts/{{$post->slug}}/edit">Update</a>
-
+            <br>
+            <br>
             <form  action="posts/{{$post->id}}" method="POST">
                 @csrf
                 @method('delete')
@@ -35,9 +37,8 @@
             @endif
             
             <div class="row no-gutters">
-                <div class="col-auto">
-                    
-            <img src="/storage/{{$post->image_path}}" class="float-left mr-4 mt-2" style="float:left;clear:right;margin-left:10px;height:300px">
+                <div class="col-auto">                   
+            <img  src=" {{asset('images/' . $post->image_path)}}" class="float-left mr-4 mt-2" style="float:left;clear:right;margin-left:10px;height:300px;position:relative;top:-10px">
                 </div>
                     <div class="col">
                         <div class="card-block p-2">

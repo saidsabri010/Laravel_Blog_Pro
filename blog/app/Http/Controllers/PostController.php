@@ -12,6 +12,9 @@ use Cviebrock\EloquentSluggable\Sluggable;
 
 class PostController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth',['except' => ['index','show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -49,8 +52,9 @@ class PostController extends Controller
             'image' => 'required|mimes:jpg,png,jpeg,svg,gif|max:10000'
         ]);
 
-        $imagePath = request('image')->store('uploads','public');
-        $request->image->move(public_path("storage/{$imagePath}"),$imagePath);
+        $imagePath = uniqid()  . '-' . $request->title . '-' . 
+        $request->image->extension();
+        $request->image->move(public_path('images'),$imagePath);
         $post = Post::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
