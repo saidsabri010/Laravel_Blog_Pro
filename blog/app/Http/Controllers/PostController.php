@@ -70,7 +70,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
@@ -82,24 +82,37 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        return view('posts.edit')
+        ->with('post', Post::where('slug',$slug)->first());
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:2|max:240',
+            'description' => 'required',
+        ]);
+
+        $post = Post::Where('slug',$slug)
+        ->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'slug' => str_slug( $request->input('title')),
+            'user_id' => auth()->user()->id
+        ]);
+        return redirect('/posts')->with('success','post has been updated successfuly !');
     }
 
     /**
@@ -112,6 +125,6 @@ class PostController extends Controller
     {
         $posts = Post::find($id)->first();
         $posts->delete();
-        return redirect()->route('posts.index')->with('success','Book has been deleted successfuly !');
+        return redirect()->route('posts.index')->with('success','post has been deleted successfuly !');
     }
 }

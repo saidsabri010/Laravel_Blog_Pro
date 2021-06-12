@@ -9,20 +9,31 @@
     
   </div>
 <div class="container">
+
+    <?php // check if a user is authonticated ?>
     @if (auth::check())
     <div>
         <a role="button" class="btn btn-outline-primary" href="/posts/create" >Create post</a>
-    </div>
-        
+    </div>     
     @endif
+
     <br>
         @foreach ($posts as $post)
         <div class="card">
+            <?php // check if a user is loged in and they have posts ?>
+            @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
+
+            <a style="width: 100px" class="btn btn-success float-right" 
+            href="/posts/{{$post->slug}}/edit">Update</a>
+
             <form  action="posts/{{$post->id}}" method="POST">
                 @csrf
                 @method('delete')
-            <button style="background-color: red;" class="btn btn-success float-right" >Delete</button>
+            <button style="background-color: red;" onclick="return confirm('Are you sure you want to delete this post?');" class="btn btn-success float-right" >Delete</button>
             </form>
+                
+            @endif
+            
             <div class="row no-gutters">
                 <div class="col-auto">
                     
