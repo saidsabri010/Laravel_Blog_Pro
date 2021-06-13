@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="icon" href="https://media.istockphoto.com/photos/interne-security-and-authentication-concept-picture-id1167157816?s=612x612">
 </head>
 <body>
     <div id="app">
